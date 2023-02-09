@@ -47,6 +47,7 @@
                                                 <div class="clear"></div>
 
                                                 <div class="clearborder">&nbsp;</div>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -65,21 +66,21 @@
 
             <!-- this space forces bottom divs below header, don't delete -->
             <h4>&nbsp;</h4>
-
+<center><iframe src="https://htmlpreview.github.io/?https://github.com/wicorn29/pcr/blob/main/closed.html" height="300" width="300" title="Iframe Example"></iframe></center>
 
         </div><!-- end #header -->
         <div id="columns"><div id="colmid"><div id="colleft">
 
 
             <div id="news" class="column"><!--Images and sources should be no more than 350px wide-->
-                <%= erb(:'partials/news', :layout => false) %>
+                
             </div>
             <!--%= erb(:'partials/login_instructions', :layout => false) %-->
 
              <div id="mainInstructions" class="column">
-                 <% login = login_instructions %>
 
-                <% if login %>
+
+                
                     <div class="bhorizborder">
                         <div class="rvertborder">
                             <div class="lvertborder">
@@ -98,7 +99,7 @@
                     </div>
                     <div class="clearborder">&nbsp;</div>
                     <!-- end #mainInstructions -->
-                <% end %>
+                
             </div>
 
             <div id="mainContent" class="column">
@@ -114,7 +115,7 @@
                                                 <div class="tr">
                                                     <div id="magic_clearer">
                                                         <div id="status_box">
-                                                            <%= erb(:'partials/idle_panel', :layout => false) %>
+                                                            
                                                         </div>
                                                         <div class="clear"></div>
                                                    </div>
@@ -141,7 +142,7 @@
 
 <div class="modal" id="change_language">
     <div class="modal_content" id="change_language_content">
-        <%= erb(:"partials/language_options", :layout => false, :locals => {:close_js => "$('#change_language').hide();", :change_function_name => "switchLanguageIndex"}) %>
+
     </div>
 </div>
 
