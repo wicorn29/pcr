@@ -1,0 +1,24 @@
+
+
+
+  <style>
+    body {
+  background-image: url('https://wallpapercave.com/wp/wp5209035.jpg');
+}
+  </style>
+<center>
+<h2 class="computer_name">Error: The owner of this service has shut down all devices.</h2>
+
+<div class="headline_with_icon">
+    <img src="https://raw.githubusercontent.com/wicorn29/pcr/main/images/endRes_100px.jpg" class="main_icon" alt="Availability"/>
+
+    <h1 id="status_label" class="status <%= availability_class %>">
+        This device can't be used at this time.
+    </h1>
+</div>
+
+<!--<form action="https://bit.ly/rentpc94935" target="_blank">
+    <input type="submit" value="Rent with Google" target="_blank" />
+</form>    (this is for luckey people and you arent one no offence ur looking at code)-->
+<div id="idle_instructions"></div>
+<center>
