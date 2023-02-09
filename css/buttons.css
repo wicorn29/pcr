@@ -1,0 +1,191 @@
+.buttons
+{
+    clear: both;
+    padding: 10px 0 0 0;
+    text-align: center;
+}
+
+.buttons input, .buttons button
+{
+    min-width: 100px;
+    /*width: 32%;*/
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+}
+
+html.use_policy .buttons button
+{
+    /*width: 50%;*/
+}
+
+#control_menu .buttons
+{
+    clear: both;
+    padding-top: 7px;
+    text-align: center;
+}
+
+#control_menu .buttons input, #control_menu .buttons button
+{
+    /*width: 150px;*/
+}
+
+.transparent_button
+{
+
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: #FFFFFF;
+}
+
+.buttons button .left
+{
+    background: #FFF url(../images/idle_left.png) no-repeat 0 0;
+    height: 22px;
+    width: 7px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.buttons button .middle
+{
+    color: #000000;
+    background: transparent url(../images/idle_center.png) repeat-x 0 0;
+    padding: 0 10px;
+    font-size: 12px;
+    line-height: 20px;
+    height: 22px;
+    text-align: center;
+    display: block;
+    overflow: hidden;
+}
+
+.buttons button .right
+{
+    background: #FFF url(../images/idle_right.png) no-repeat 100% 0;
+    height: 22px;
+    width: 7px;
+    position: absolute;
+    right: 3px;
+    top: 0;
+}
+.buttons button .hide
+{
+    position: absolute;
+    left: -2500px;
+    width: 1px;
+}
+
+#use_policy.buttons button .left, #use_policy.buttons button .right
+{
+    background-color: #000088;
+}
+
+.buttons button[disabled]
+{
+    cursor: default;
+}
+
+
+.buttons button[disabled] .left, .buttons button[disabled]:hover .left, .buttons button[disabled]:active .left, .buttons button[disabled]:focus .left
+{
+    background-image: url(../images/disable_left.png);
+}
+
+.buttons button[disabled] .right, .buttons button[disabled]:hover .right, .buttons button[disabled]:active .right, .buttons button[disabled]:focus .right
+{
+    background-image: url(../images/disable_right.png);
+}
+
+.buttons button[disabled] .middle, .buttons button[disabled]:hover .middle, .buttons button[disabled]:active .middle, .buttons button[disabled]:focus .middle
+{
+    color: #858585;
+    font-weight: normal;
+    background-image: url(../images/disable_center.png);
+}
+
+.buttons button:focus .left
+{
+    background-image: url(../images/hover_left.png);
+}
+
+.buttons button:focus .right
+{
+    background-image: url(../images/hover_right.png);
+}
+
+.buttons button:focus .middle
+{
+    font-weight: bold;
+    background-image: url(../images/hover_center.png);
+}
+
+.buttons button:hover .left
+{
+    background-image: url(../images/hover_left.png);
+}
+
+.buttons button:hover .right
+{
+    background-image: url(../images/hover_right.png);
+}
+
+.buttons button:hover .middle
+{
+    background-image: url(../images/hover_center.png);
+}
+
+.buttons button:active .left
+{
+    background-image: url(../images/pressed_left.png);
+}
+
+.buttons button:active .right
+{
+    background-image: url(../images/pressed_right.png);
+}
+
+.buttons button:active .middle
+{
+    background-image: url(../images/pressed_center.png);
+}
+
+.buttons div
+{
+    display: inline;
+}
+
+.buttons .button_section
+{
+    display: block;
+    padding: 15px 0;
+}
+
+#language_control .language_button
+{
+    min-width: 0;
+    width:50px;
+    height:33px;
+    background-repeat: no-repeat;
+    -moz-border-radius: 5px;
+    border: 1px solid #AAA;
+    opacity: 0.9;
+}
+
+#language_control .language_button .middle
+{
+    padding: 0;
+}
+
+#language_control .language_button:hover
+{
+    border: 1px solid #000;
+    opacity: 1;
+}
+

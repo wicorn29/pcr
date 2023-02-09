@@ -1,0 +1,202 @@
+html
+{
+    background-color: transparent;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 0.9em;
+}
+
+body
+{
+    padding: 0;
+    margin: 0;
+
+    font-size: 11px;
+    border: 1px solid #6e59aa;
+    position: fixed;
+    bottom: 0px;
+}
+
+.small_window
+{
+	width: 342px;
+    min-height: 35px;
+    padding: 2px;
+    padding-left: 5px;
+    padding-bottom: 1px;
+    overflow: hidden;
+}
+
+#control_menu
+{
+    background-color: #333333;
+}
+
+.control_menu_simulated_button
+{
+    background-color: #4E387E;
+    color: white;
+    border-style: outset;
+    border-width: thin;
+    -moz-border-radius: 3px;
+}
+
+#time_remaining_text
+{
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-top: -2px;
+    color: #333333;
+    padding-top: 4px;
+}
+
+#hide_my_screen_icon
+{
+    float: left;
+    padding-right: 10px;
+}
+
+.control_menu_icon
+{
+    float: left;
+    padding-right: 10px;
+}
+
+#time_remaining
+{
+    text-align: center;
+}
+
+#control_menu_pcres_icon
+{
+    float: left;
+    /*margin-top: 1px;*/
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+#progress_background
+{
+    float: left;
+    width: 175px;
+    height: 18px;
+    background-color: #bbb;
+    position: relative;
+    /*margin-top: 1px;*/
+	margin-top: auto;
+	margin-bottom: auto;
+    margin-left: 5px;
+    -moz-border-radius: 3px;
+    border: 1px solid #111;
+}
+
+#progress_foreground
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #EEE;
+    width: 100%;
+    -moz-border-radius-topleft: 3px;
+    -moz-border-radius-bottomleft: 3px;
+}
+
+#control_menu_holder
+{
+    float: left;
+    width: 130px;
+    text-align: center;
+    margin-left: 5px;
+}
+
+#control_menu_selector
+{
+    width: 100%;
+}
+
+.pop_up_frame
+{
+    width: 343px;
+    min-height: 211px;
+    padding: 3px 3px 0px 3px;
+    overflow: hidden;
+    background-color: #333333;
+}
+
+.pop_up_window
+{
+    padding: 7px;
+    background: #FFFFFF;
+    /*height: 100%;*/
+	min-height: 205px;
+}
+
+#language_control.pop_up_text
+{
+    height: 115px;
+}
+
+.pop_up_text
+{
+    overflow: auto;
+    margin: 12px 0 0 0;
+    height: 95px;
+}
+
+#warnings_text
+{
+    padding-top: 5px;
+}
+
+.blink_on div#control_menu, .blink_on div.pop_up_frame
+{
+	background-color: #FF4500;
+}
+
+#hide_password_prompt_text
+{
+    margin-bottom: 5px;
+}
+
+.pop_up_button input
+{
+    padding: 0px;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.hide
+{
+    position: absolute;
+    left: -2500px;
+    width: 1px;
+}
+
+#language_control td
+{
+    padding: 3px;
+    text-align: left;
+}
+
+#language_control table
+{
+    width: 100%;
+    padding: 0;
+}
+
+.transition
+{
+    height:100%;
+    width:100%;
+    background: #4727A4 url(../images/PCres4_loader.gif) no-repeat scroll top center;
+}
+
+a.no_decoration
+{
+    text-decoration: none;
+    color: white;
+}
