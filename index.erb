@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html style="background-color:<%= top_banner_color %>">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>PC Reservation Login</title>
+    <link href="https://raw.githubusercontent.com/wicorn29/pcr/main/css/idle.css" rel="stylesheet" type="text/css"/>
+    <link href="https://raw.githubusercontent.com/wicorn29/pcr/main/css/buttons.css<%= no_cache %>" media="screen" rel="stylesheet" type="text/css"/>
+    <link href="/css/jquery.keypad.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="https://raw.githubusercontent.com/wicorn29/pcr/main/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="https://raw.githubusercontent.com/wicorn29/pcr/main/js/jquery.plugin.min.js"></script>
+    <script type="text/javascript" src="https://raw.githubusercontent.com/wicorn29/pcr/main/js/jquery.keypad.js"></script>
+    <script type="text/javascript" src="https://raw.githubusercontent.com/wicorn29/pcr/main/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="https://raw.githubusercontent.com/wicorn29/pcr/main/js/pcr.js.erb<%= no_cache %>&amp;computer_name=<%= session_key %>"></script>
+    <script type="text/javascript" src="https://raw.githubusercontent.com/wicorn29/pcr/main/js/languageUtilities.js<%= no_cache %>&amp;computer_name=<%= session_key %>"></script>
+  <style>
+    body {
+  background-image: url('https://raw.githubusercontent.com/wicorn29/pcr/main/images/globalBkgrnd.jpg');
+}
+  </style>
+</head>
+
+<body id="idle_screen_body" class="pcRes4 idle_body" style="overflow:hidden" onload="setupViewportHeight(); removeStyleOverflow(); armIdleMode();">
+
+<div id="bg" onclick="bodyClickHandler(event);">
+
+    <div id="container">
+        <div id="viewport" style="background-color:<%= background_color %>">    </div>
+
+        <div id="header">
+            <div id="area" style="background-color:<%= client.background_color %>">
+                <div class="bhorizborderArea">
+                    <div class="rvertborderArea">
+                        <div class="lvertborderArea">
+                            <div class="thorizborderArea">
+                                <div class="blArea">
+                                    <div class="brArea">
+                                        <div class="tlArea">
+                                            <div class="trArea">
+
+                                                <div id="area_icon">
+                                                    <img src="https://raw.githubusercontent.com/wicorn29/pcr/main/images/depts.jpg" alt="Library Departments" width="62" height="35" align="absmiddle"/>
+                                                </div>
+
+                                                <h3 id="area_name" style="color:<%= client.foreground_color %>">
+                                                    Welcome to WilWare!
+                                                </h3>
+                                                <div class="clear"></div>
+
+                                                <div class="clearborder">&nbsp;</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- end #area --></div>
+
+            <div id="logo">
+                <img src="https://raw.githubusercontent.com/wicorn29/pcr/main/images/EnvisionWareLibraryLogo_Default.png" height="75" align="absmiddle"  alt="PC Reservation"/>
+                <!-- end #logo --></div>
+
+            <!-- this space forces bottom divs below header, don't delete -->
+            <h4>&nbsp;</h4>
+
+
+        </div><!-- end #header -->
+        <div id="columns"><div id="colmid"><div id="colleft">
+
+
+            <div id="news" class="column"><!--Images and sources should be no more than 350px wide-->
+                <%= erb(:'partials/news', :layout => false) %>
+            </div>
+            <!--%= erb(:'partials/login_instructions', :layout => false) %-->
+
+             <div id="mainInstructions" class="column">
+                 <% login = login_instructions %>
+
+                <% if login %>
+                    <div class="bhorizborder">
+                        <div class="rvertborder">
+                            <div class="lvertborder">
+                                <div class="thorizborder">
+                                    <div class="bl">
+                                        <div class="br">
+                                            <div class="tl">
+                                                <div class="tr" 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearborder">&nbsp;</div>
+                    <!-- end #mainInstructions -->
+                <% end %>
+            </div>
+
+            <div id="mainContent" class="column">
+                <div id="mainScreen">
+
+                    <div class="bhorizborder">
+                        <div class="rvertborder">
+                            <div class="lvertborder">
+                                <div class="thorizborder">
+                                    <div class="bl">
+                                        <div class="br">
+                                            <div class="tl">
+                                                <div class="tr">
+                                                    <div id="magic_clearer">
+                                                        <div id="status_box">
+                                                            <%= erb(:'partials/idle_panel', :layout => false) %>
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                   </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearborder">&nbsp;</div>
+
+                    <!-- end #mainScreen -->
+                </div>
+                <!-- end #mainContent -->
+            </div>
+            <!-- This clearing element should immediately follow the #mainContent div in order to force the #container div to contain all child floats -->
+            <br class="clearfloat"/>
+        </div></div></div><!-- end #columns -->
+
+    </div><!-- end #container -->
+</div><!-- end #bg -->
+
+<div class="modal" id="change_language">
+    <div class="modal_content" id="change_language_content">
+        <%= erb(:"partials/language_options", :layout => false, :locals => {:close_js => "$('#change_language').hide();", :change_function_name => "switchLanguageIndex"}) %>
+    </div>
+</div>
+
+<div id="coverup" style="display: none;"></div>
+<div id="endMarker"></div>
+</body>
+</html>
