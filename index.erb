@@ -17,6 +17,15 @@
   background-image: url('https://raw.githubusercontent.com/wicorn29/pcr/main/images/globalBkgrnd.jpg');
 }
   </style>
+      <script type="text/javascript">
+    $(document).ready(function() {
+        $('#btReload').click(function() { location.reload(true); });   
+
+        // SET AUTOMATIC PAGE RELOAD TIME TO 5000 MILISECONDS (5 SECONDS).
+        setTimeout('refreshPage()', 5000);
+    });
+    function refreshPage() { location.reload(); } </script>
+ 
 </head>
 
 <body id="idle_screen_body" class="pcRes4 idle_body" style="overflow:hidden" onload="setupViewportHeight(); removeStyleOverflow(); armIdleMode();">
