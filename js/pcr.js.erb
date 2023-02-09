@@ -1,0 +1,863 @@
+if(!Array.indexOf)
+{
+    Array.prototype.indexOf = function(obj)
+    {
+        for(var i = 0; i < this.length; i++)
+        {
+            if(this[i] == obj)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+
+function unique_id()
+{
+    // Math.random should be unique because of its seeding algorithm.
+    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+    // after the decimal.
+    return Math.random().toString(36).substr(2, 9);
+};
+
+var setViewportHeight = function()
+{
+    var endMarker = $("#endMarker");
+    var viewport = $("#viewport");
+    if(endMarker.length === 0 || viewport.length === 0)
+    {
+        return;
+    }
+
+    var windowHeight = $(window).height();
+    var documentHeight = endMarker.offset().top;
+    viewport.height(documentHeight - 135);
+};
+
+var setupViewportHeight = function()
+{
+    $(window).resize(setViewportHeight);
+    setViewportHeight();
+};
+
+var removeStyleOverflow = function()
+{
+    if ($('#idle_screen_body').length != 0)
+    {
+        $('#idle_screen_body').removeAttr("style");
+    }
+};
+
+var armPing = function()
+{
+    $(window).load(startIntervals);
+};
+
+var pingServer = function()
+{
+    $.getScript("/ping?computer_name=<%= session_key %>");
+};
+
+var pingInterval = null;
+var startPingingEvery = function(seconds)
+{
+    if (pingInterval !== null) {
+        clearTimeout(pingInterval);
+        pingInterval = null;
+    }
+    pingInterval = setTimeout(function() {
+		pingServer();
+        setTimeout(arguments.callee, seconds);
+    }, seconds);
+};
+
+var ticTasks = [];
+var ticInterval = null;
+var startTickingEvery = function(seconds)
+{
+    if (ticInterval !== null) {
+        clearTimeout(ticInterval);
+        ticInterval = null;
+    }
+    ticInterval = setTimeout(function() {
+		tic();
+        setTimeout(arguments.callee, seconds);
+    }, seconds);
+};
+
+var startIntervals = function()
+{
+	startPingingEvery(1000);
+    startTickingEvery(500);
+};
+
+var tic = function()
+{
+	for(var i = 0; i < ticTasks.length; i++)
+	{
+		var task = ticTasks[i];
+		if(task)
+		{
+			try
+			{
+				task();
+			}
+			catch(e)
+			{
+			}
+		}
+	}
+};
+
+var addTicTask = function(task)
+{
+    if (ticTasks.indexOf(blinker) === -1)
+    {
+        ticTasks[ticTasks.length] = task;
+    }
+};
+
+var removeTicTask = function(task)
+{
+	var index = ticTasks.indexOf(task)
+	if(index !== -1)
+		ticTasks.splice(index, 1);
+};
+
+var unbindEvents = function()
+{
+    $(document).unbind('click').unbind('mousemove').unbind('keypress');
+}
+
+var c = 0;
+var moveToLogin = function(e)
+{
+    if(!e)
+    {
+        var e = window.event;
+    }
+
+    if(e.type == "mousemove")
+    {
+        if((c++) == 2)
+        {
+            $(document).unbind('mousemove')
+            $(document).keypress()
+        }
+    }
+    else
+    {
+        unbindEvents();
+        moveDirectlyToLogin();
+    }
+    return true;
+};
+
+var post = function(path, data)
+{
+    disarmNonIdleTimeout();
+    clearButtons();
+
+    if(data == null)
+        data = {};
+    data['computer_name'] = '<%= session_key %>';
+    $.post(path, data, function(js)
+    {
+        eval(js);
+    });
+};
+
+var startSuperUserSession = function()
+{
+    $.getScript("/start_super_user_session?computer_name=<%= session_key %>");
+};
+
+var moveDirectlyToLogin = function()
+{
+    $.getScript("/wake_up?computer_name=<%= session_key %>");
+};
+
+var moveToAtClientForm = function()
+{
+    $.getScript("/at_client_form?computer_name=<%= session_key %>");
+}
+
+var handleMenuSelection = function(e)
+{
+    if(!e)
+    {
+        var e = window.event;
+    }
+
+    var selectedOption = $('#control_menu_selector').find(':selected').val();
+
+    if(selectedOption == "end_session")
+    {
+		handleEndSessionClicked();
+    }
+    else if(selectedOption == "hide_my_screen")
+    {
+		handleHideSessionClicked();
+    }
+    else if(selectedOption == "change_language")
+    {
+		handleChangeLanguageClicked();
+    }
+
+    $('#control_menu_selector')[0].selectedIndex = 0;
+};
+
+/* Issue 14008 */
+var handleHideSessionClicked = function()
+{
+    $.getScript('/hide_session_prompt?computer_name=<%= session_key %>');
+    return false;
+}
+
+/* Issue 14008 */
+var handleChangeLanguageClicked = function()
+{
+    $.getScript('/change_language_prompt?computer_name=<%= session_key %>');
+    return false;
+}
+
+/* Issue 14008 */
+var handleEndSessionClicked = function()
+{
+    showEndSessionConfirmation();
+    return false;
+}
+
+/* Issue 14008 */
+var handleOtherOptionsClicked = function()
+{
+    $.getScript('/other_session_options_prompt?computer_name=<%= session_key %>');
+    return false;
+}
+
+var showTransition = function()
+{
+    $('body').html("");
+    $('body').attr('class', '');
+    $('html').attr('class', 'transition');
+};
+
+var clearDiv = function(id)
+{
+    $('#' + id).html("");
+};
+
+var clearBody = function()
+{
+    $('body').html("").attr('class', '').removeAttr('style');
+    $('html').attr('class', 'blank');
+};
+
+var coverBody = function()
+{
+    $('#coverup').show();
+    $('html').css('overflow', 'hidden');
+};
+
+var uncoverBody = function()
+{
+    $('#coverup').hide();
+    $('html').css('overflow', 'visible');
+};
+
+var logout = function()
+{
+    showTransition();
+    location.href = "/logout?computer_name=<%= session_key %>";
+};
+
+var goIdle = function()
+{
+    location.href = "/?computer_name=<%= session_key %>";
+};
+
+var hideAllDialogs = function()
+{
+    $('#warnings_text').text('');
+    $('.pop_up_frame').css('display', 'none');
+};
+
+var resetTimeouts = function() {
+    if (welcomeTimeout != null)
+        clearTimeout(welcomeTimeout);
+    if (document.title == 'idle_timeout_warning')
+        timeoutWarningAcknowledged();
+}
+
+var openDialog = function(dialog)
+{
+    resetTimeouts();
+    hideAllDialogs();
+    /* This changes the window size */
+	var size = getPopupFrameSize();
+	$.get('/expandPortal?width=' + size.width + '&height=' + size.height + '&computer_name=<%= session_key %>');
+    $('#' + dialog).css('display', 'block');
+    document.title = dialog;
+};
+
+var blink = function(selector)
+{
+	var element = $(selector);
+	if(element.hasClass("blink_on"))
+		element.removeClass("blink_on");
+	else
+		element.addClass("blink_on");
+};
+
+var blinker = function(){blink('body')};
+
+var startBlinking = function()
+{
+    addTicTask(blinker);
+};
+
+var stopBlinking = function()
+{
+	removeTicTask(blinker);
+    $("body").removeClass("blink_on");
+};
+
+var displayWarning = function(warningText)
+{
+    if($('#control_menu').length == 0)
+    {
+        return;
+    }
+
+    openDialog("warnings");
+    $('#warnings_text').text(warningText);
+    $('#warnings_close_button')[0].focus();
+};
+
+var closeWarnings = function()
+{
+    hideAllDialogs();
+    $.get('/contractPortal?computer_name=<%= session_key %>');
+    document.title = 'control_menu';
+    stopBlinking();
+    $('#control_menu_pcres_icon').focus();
+
+};
+
+var displayIdleTimeoutWarning = function()
+{
+    openDialog('idle_timeout_warning');
+    $('#idle_timeout_ok_button')[0].focus();
+};
+
+var showEndSessionConfirmation = function()
+{
+    openDialog('confirmation');
+    $('#no_button')[0].focus();
+};
+
+var showHidePasswordPrompt = function(prompt)
+{
+    openDialog('hide_password_prompt');
+    $('#hide_password_prompt_text').text(prompt);
+    $('#hide_pin').val("");
+    $('#hide_pin').focus();
+};
+
+var showChangeLanguagePrompt = function()
+{
+    openDialog('change_language_prompt');
+     $('#language_code_button')[0].focus();
+};
+
+// Issue 14008
+var showOtherSessionOptionsPrompt = function()
+{
+    openDialog('other_session_options_prompt');
+    $('#end_session_button')[0].focus();
+};
+
+
+var bodyClickHandler = function(event)
+{
+    type = event.target.tagName.toLowerCase();
+    if (type != "input" && type != "a" && type != "button")
+    {
+        focusFirstInput();
+    }
+};
+
+var focusFirstInput = function()
+{
+    $('#status_box input:first').focus();
+};
+
+var updateStatusBox = function(templateName)
+{
+    $.get('/partial?computer_name=<%= session_key %>', {'name' : templateName}, function(data, textStatus)
+    {
+        $('#status_box').html(data);
+        focusFirstInput();
+        setViewportHeight();
+        document.title = templateName;
+    });
+};
+
+var updateLanguageOptions = function(currentTemplate)
+{
+    $.get('/language_options', { 'computer_name':'<%= session_key %>', 'partial' : currentTemplate}, function(data, textStatus)
+    {
+        $('#change_language_content').html(data);
+    });
+}
+
+var setStatusBoxText = function(text)
+{
+    $('body').html('<h1>' + text + '</h1>');
+};
+
+var updatePartial = function(partial_name)
+{
+    $.get('/partial?computer_name=<%= session_key %>', {'name' : partial_name}, function(data, textStatus)
+    {
+        $('#' + partial_name).html(data);
+        setViewportHeight();
+    });
+};
+
+var bindEscape = function()
+{
+
+    $(document).keydown(function(e)
+    {
+         if(e.keyCode == 27)
+        {
+            $(".cancel").click();
+            return false;
+        }
+    });
+};
+
+var wakeUp = function(templateName)
+{
+    updateStatusBox(templateName);
+    updatePartial("news");
+    updatePartial("login_instructions");
+    updatePartial("area_name");
+    updateLanguageOptions(templateName);
+    disarmIdleMode();
+    armNonIdleTimeout();
+};
+
+var armIdleMode = function()
+{
+    unbindEvents();
+    $(document).keypress(moveToLogin).click(moveToLogin).mousemove(moveToLogin);
+};
+
+var disarmIdleMode = function()
+{
+    unbindEvents();
+    $(document).click(rearmTimeout).keypress(rearmTimeout);
+};
+
+var nonIdleTimeout;
+var timeoutCommand;
+var timeoutLength;
+
+var armNonIdleTimeout = function()
+{
+ 	armTimeout("timedOut = true; $('#submit_button').attr('disabled', 'disabled'); location.href='/?computer_name=<%= session_key %>';",<%= screen_timeout_millis %>);   //was 15000
+};
+
+var armTradeConfirmationTimeout = function()
+{
+    armTimeout("post('/trade_offer_response', { 'response': 'declined', 'confirmed': 'true' });",<%= screen_timeout_millis %> + 45000);   //was 60000
+};
+
+var armAtClientConfirmationTimeout = function()
+{
+    armTimeout("post('/cancel_at_client_reservation', { 'confirmed': 'true' });", <%= screen_timeout_millis %> + 15000);   //was 30000
+};
+
+var armFilteringDecisionTimeout = function()
+{
+    armTimeout("post('/filter_at_client_reservation', { 'filtered': 'false' });", <%= screen_timeout_millis %> + 15000);   //was 30000
+};
+
+var disarmNonIdleTimeout = function()
+{
+    if(nonIdleTimeout != null)
+        clearTimeout(nonIdleTimeout);
+};
+
+var armTimeout = function(command, length)
+{
+    timeoutCommand = command;
+    timeoutLength = length;
+    rearmTimeout();
+};
+
+var rearmTimeout = function()
+{
+    disarmNonIdleTimeout();
+    nonIdleTimeout = setTimeout(timeoutCommand, timeoutLength);
+    return true;
+};
+
+var filled_in = function(id)
+{
+    return ($(id).length == 0 || $(id).val() != '');
+}
+
+var check_submit = function()
+{
+    if(filled_in('#card_number') &&
+       filled_in('#pin') &&
+       filled_in('#last_name') )
+    {
+        $('#submit_button').removeAttr("disabled");
+    }
+    else
+    {
+        $('#submit_button').attr("disabled", "disabled");
+    }
+};
+
+var enableIfNotEmpty = function(button, fields)
+{
+    var oneFieldIsEmpty = false;
+    for(var i = 0; i < fields.length && !oneFieldIsEmpty; i++)
+    {
+        oneFieldIsEmpty |= isEmpty(fields[i]);
+    }
+
+    if(oneFieldIsEmpty)
+    {
+        $('#' + button).attr("disabled", "disabled");
+    }
+    else
+    {
+        $('#' + button).removeAttr("disabled");
+    }
+};
+
+var isEmpty = function(field)
+{
+    var field_element = $('#' + field)
+    if(field_element == null)
+        return false;
+    return field_element.val() == '';
+};
+
+var updateProgressBarColor = function(colorName)
+{
+    if($('#control_menu').length == 0)
+    {
+        return;
+    }
+
+    var backgroundColor = '#00cc00'; // green
+    var color = "#000000";
+
+    if(colorName == 'yellow')
+    {
+        backgroundColor = '#cccc00';
+    }
+    else if(colorName == 'red')
+    {
+        backgroundColor = '#cc0000';
+    }
+
+    $('#progress_foreground').css('background-color', backgroundColor);
+    $('#time_remaining_text').css('color', color);
+};
+
+var updateTimeRemaining = function(total_seconds)
+{
+    if($('#time_remaining').length > 0)
+    {
+        $('#time_remaining').text(total_seconds);
+    }
+
+};
+
+var updateTimeRemainingPercentage = function(percent)
+{
+    if($('#progress_foreground').length > 0)
+    {
+        $('#progress_foreground').css('width', percent + '%');
+    }
+};
+
+var isFullscreenSingle = function(href)
+{
+    return href.match(/\/#?(\?.*)?$/) || href.match(/\/hide_session$/)
+};
+
+var switchLanguageIndex = function(language_code, unused)
+{
+    $('#change_language').hide();
+    $.getScript(urlForLanguage('wake_up', language_code));
+};
+
+var switchLanguageIndexPartial = function(language_code, partial)
+{
+    $('#change_language').hide();
+    $.getScript(urlForLanguage('ping', language_code));
+    wakeUp(partial);
+};
+
+var switchLanguageUsePolicy = function(language_code, unused)
+{
+    location.href = (urlForLanguage('use_policy', language_code));
+    $('#change_language').hide();
+};
+
+var switchLanguageControlMenu = function(language_code)
+{
+    $.get('/contractPortal', {'computer_name': '<%= session_key %>'}, function(data)
+    {
+        location.href = (urlForLanguage('control_menu', language_code));
+    });
+    $('#change_language').hide();
+};
+
+var urlForLanguage = function(action, language_code)
+{
+    return '/' + action + '?lang=' + language_code + "&computer_name=<%= session_key %>";
+};
+
+var showLanguageOptions = function()
+{
+    $('#change_language').show();
+};
+
+var showError = function(message, title)
+{
+    $.get('/partial', {'name': 'error', 'computer_name': '<%= session_key %>'}, function(data, textStatus)
+    {
+        $('#status_box').html(data);
+        $('#error_title').text(title);
+        $('#error_message').text(message);
+        $('#error_title_for_button').text(title);
+        $('#error_message_for_button').text(message);
+        document.title = 'error';
+    });
+    armTimeout("location.href='/?computer_name=<%= session_key %>';",<%= screen_timeout_millis %> + 15000); //was 30000);
+};
+
+var onSubmitActions = function(formName)
+{
+    disarmNonIdleTimeout();
+    clearButtons();
+    return submit_form(formName);
+};
+
+var submit_form = function(formName)
+{
+    var form = $("form[name='" + formName + "']")[0];
+    var inputs = $("form[name='" + formName + "'] input");
+    var data = {};
+    for(var i = 0; i < inputs.length; i++)
+    {
+        var input = inputs[i];
+        data[input.name] = input.value;
+    }
+    data.computer_name = '<%= session_key %>';
+
+    $.ajax({
+        type: "POST",
+        url: form.action,
+        data: data,
+        success: function(data, status)
+        {
+            eval(data);
+            uncoverBody();
+        }
+    });
+    return false;
+};
+
+var showUsePolicy = function()
+{
+    $('#idle_screen_body').html("").addClass('use_policy_body').removeClass('idle_body');
+    location.href = '/use_policy?computer_name=<%= session_key %>';
+};
+
+var clearButtons = function()
+{
+    if($('.buttons').length > 0)
+    {
+        $('.buttons').remove();
+    }
+};
+
+var resetControlMenu = function()
+{
+    $("#control_menu_selector option[name='default']").attr("selected", "selected");
+};
+
+var resizeControlMenu = function()
+{
+	var size = getSmallWindowSize();
+	$.get("/resize_control_menu?width=" + size.width + "&height=" + size.height + "&computer_name=<%= session_key %>");
+
+	vcenterControlMenuElements(size);
+	return false;
+};
+
+var vcenterControlMenuElements = function(size)
+{
+	var offset = 3;
+	var iconHeight = $("#control_menu_pcres_icon").height();
+	var margin_top = ((size.height - iconHeight) / 2) - offset;
+	$("#control_menu_pcres_icon").css("margin-top", margin_top + "px");
+
+	var progressBarHeight = $("#progress_background").height();
+	margin_top = ((size.height - progressBarHeight) / 2) - offset;
+	$("#progress_background").css("margin-top", margin_top + "px");
+
+	var comboBoxHolder = $("#control_menu_holder");
+	var comboBoxHeight = $("#control_menu_holder").height();
+	margin_top = ((size.height - comboBoxHeight) / 2);
+	if (margin_top > offset)
+		margin_top = margin_top - offset;
+	$("#control_menu_holder").css("margin-top", margin_top + "px");
+};
+
+var getSmallWindowSize = function()
+{
+	var size = {};
+	size.height = $(".small_window").height() + 5;
+	size.width = 350;
+	return size;
+};
+
+var getPopupFrameSize = function()
+{
+	var smallWindowSize = getSmallWindowSize();
+	var size = {};
+	size.height = smallWindowSize.height + $(".pop_up_frame").height() + 4;
+	size.width = smallWindowSize.width;
+	return size;
+};
+
+var timeoutWarningAcknowledged = function()
+{
+    closeWarnings();
+    $.get("/disengage_idle_timeout?computer_name=<%= session_key %>");
+};
+
+var deactivateControlMenu = function()
+{
+    updatePartial("control_menu_holder");
+};
+
+var displayInformation = function(title, message, message2)
+{
+    if($('#control_menu').length == 0)
+        return;
+
+    openDialog("information");
+    $('#information_title').text(title);
+    $('#information_text').text(message);
+    $('#information_text2').text(message2);
+    $('#information_title_for_button').text(title);
+    $('#information_text_for_button').text(message);
+    $('#information_text2_for_button').text(message2);
+    $('#information_close_button')[0].focus();
+
+    stopBlinking();
+};
+
+var welcomeTimeout;
+var setWelcomeTimeout = function()
+{
+    welcomeTimeout = setTimeout('closeWarnings();', <%= screen_timeout_millis %>);
+};
+
+var displayWelcome = function()
+{
+    if($('#control_menu').length == 0)
+        return;
+
+    openDialog("welcome_screen");
+    $('#welcome_close_button')[0].focus();
+    setWelcomeTimeout();
+
+    stopBlinking();
+};
+
+var displayExtendTimeConfirmation = function(message)
+{
+    if($('#control_menu').length == 0)
+        return;
+
+    openDialog("extend_time_confirmation");
+    $('#extend_time_confirmation_text').text(message)
+
+    stopBlinking();
+};
+
+var acceptTimeExtension = function()
+{
+    closeWarnings();
+    $.get("/accept_extra_time?computer_name=<%= session_key %>");
+};
+
+var declineTimeExtension = function()
+{
+    closeWarnings();
+    $.get("/decline_extra_time?computer_name=<%= session_key %>");
+};
+
+var setupKeypad = function(setting, target)
+{
+  if(setting == '1')
+  {
+    $(target).keypad({keypadOnly: false});
+  }
+  else if(setting == '2')
+  {
+  	if (target == '#pin')
+  	{
+      $(target).keypad({keypadOnly: false, layout: ['qwertyuiop\'"' + $.keypad.HALF_SPACE + '789',
+  			$.keypad.HALF_SPACE + 'asdfghjkl;:' + $.keypad.SPACE + '456',
+  			$.keypad.SPACE + 'zxcvbnm,.?' + $.keypad.SPACE + $.keypad.HALF_SPACE + '123',
+  			'' + $.keypad.SHIFT + $.keypad.SPACE_BAR + $.keypad.BACK + $.keypad.CLEAR + $.keypad.HALF_SPACE + '0' + $.keypad.CLOSE]});
+  	}
+  	else
+  	{
+  		$(target).keypad({keypadOnly: false, layout: ['QWERTYUIOP\'"' + $.keypad.HALF_SPACE + '789',
+  			$.keypad.HALF_SPACE + 'ASDFGHJKL;:' + $.keypad.SPACE + '456',
+  			$.keypad.SPACE + 'ZCVBNM,.?' + $.keypad.SPACE + $.keypad.HALF_SPACE + $.keypad.SPACE + '123',
+  			'' + $.keypad.HALF_SPACE + $.keypad.SPACE_BAR + $.keypad.HALF_SPACE + $.keypad.BACK + $.keypad.CLEAR + $.keypad.HALF_SPACE + $.keypad.SPACE+ '0' + $.keypad.CLOSE]});
+  	}
+  }
+  else if(setting == '3')
+  {
+    var specialCharactersLayout1 = '!@#$%^&*()_=' + $.keypad.HALF_SPACE + $.keypad.SPACE + $.keypad.CLOSE;
+    var specialCharactersLayout2 =  $.keypad.SPACE + '`~[]{}<>\\/' + $.keypad.HALF_SPACE + $.keypad.SPACE + '789';
+
+    if (target == '#pin')
+  	{
+  		$(target).keypad({keypadOnly: false, layout: [ specialCharactersLayout1,
+        specialCharactersLayout2,
+  			'qwertyuiop\'"' + $.keypad.HALF_SPACE + '456',
+  			$.keypad.HALF_SPACE + 'asdfghjkl;:' + $.keypad.SPACE + '123',
+  			$.keypad.SPACE + 'zxcvbnm,.?' + $.keypad.SPACE + $.keypad.HALF_SPACE + '-0+',
+  			''  + $.keypad.SHIFT + $.keypad.SPACE_BAR + $.keypad.BACK + $.keypad.CLEAR]});
+  	}
+  	else
+  	{
+  		$(target).keypad({keypadOnly: false, layout: [ specialCharactersLayout1,
+        specialCharactersLayout2,
+  			'QWERTYUIOP\'"' + $.keypad.HALF_SPACE + '456',
+  			$.keypad.HALF_SPACE + 'ASDFGHJKL;:' + $.keypad.SPACE + '123',
+  			$.keypad.SPACE + 'ZCVBNM,.?' + $.keypad.SPACE + $.keypad.SPACE + $.keypad.HALF_SPACE + '-0+',
+  			'' + $.keypad.HALF_SPACE + $.keypad.SPACE_BAR + $.keypad.HALF_SPACE + $.keypad.BACK + $.keypad.CLEAR]});
+  	}
+  }
+};
