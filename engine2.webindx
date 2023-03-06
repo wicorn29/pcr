@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<title>PCR (STARTING...)</title>
+<body>
+
+<h1>Starting PCR...</h1>
+<p>PCR - Reserve your PC to someone else </p>
+<label for="file">Checking for updates and starting...</label>
+<progress id="file" max="100"> 32% </progress>
+
+</body>
+</html>
