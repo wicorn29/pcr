@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html id=html >
+<head>
+<title>PCR</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body id=body >
+<h1>Starting PCR...</h1>
+<button onclick="openFullscreen();">Start PCR</button>
+<script>
+/* Get the element you want displayed in fullscreen mode (a video in this example): */
+var elem = document.getElementById("html");
+
+/* When the openFullscreen() function is executed, open the video in fullscreen.
+Note that we must include prefixes for different browsers, as they don't support the requestFullscreen method yet */
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+  location.replace("https://htmlpreview.github.io/?https://github.com/wicorn29/pcr/blob/main/engine2.webindx");
+}
+</script>
+</body>
+</html>
+
