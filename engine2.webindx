@@ -8,5 +8,9 @@
 <label for="file">Checking for updates and starting...</label>
 <progress id="file" max="100"> 32% </progress>
 
+<script>
+location.replace("https://htmlpreview.github.io/?https://github.com/wicorn29/pcr/blob/main/appver/0.1.dll");
+</script>
+
 </body>
 </html>
