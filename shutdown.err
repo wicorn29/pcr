@@ -7,18 +7,18 @@
 }
   </style>
 <center>
-<h2 class="computer_name">Error: battchrg.</h2>
+<h2 class="computer_name">THIS DEVICE IS NOT REGISTERED</h2>
 
 <div class="headline_with_icon">
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKQAAACkCAMAAAAua3VzAAAAbFBMVEX///8AAACbm5ulpaX5+fnn5+dHR0fr6+tKSkqvr6/f39/19fXv7+9PT0+YmJj8/Pw8PDzFxcUbGxswMDDW1taMjIxCQkK3t7dcXFxUVFSGhobLy8u/v79iYmI1NTUTExN+fn52dnYjIyNqamqZ5x33AAACsklEQVR4nO2a67aqIBRGQ7OLt1Lxbier93/Hk922oiYYMIZjfPOnIGvuvWShxGoFAAAAAAAAAAAAAAAAAAAAAAAAAI3Ye0MbZurOcqyORCe5PcMx0Kp45zjD0tMtSQxxSe2O5HQQdVzrl9ysFyC5mysZGaZ6/B8ld/PKlxjuj5KbrQorBguSkoCkLCApC/2SwpE+kp7wjXMlt7V4+X9J/tu/4H5nmylZXUnF08+lrVdxi1nEz6VKSadZhf3pboG5ubQGZiU5hpgvuT01t9yc771osTuTtP3uqFHy8P7goON9rKB+TBGre1Wb5CF+h9iP9HD3dfLoEDNzS5vkNvmEyIf+BCfNomdzmLKNuiT3YStGbyyanj6NWb/AaJIsOjG6FcQ2btFf21AZ1SJJN90Yl0+LYxvXdst1sIjqkEzZGPmzCDmBkXcbsuGJr17yULAhyLXJN629M3O9HqmgyiVt1uQRhF76F6PR9VK1pBmyAcYYmNV6JNc3XkVSfFkslUoG3JuD46lWLWkOPY6D5F+Wc6WSFn+q44lYyiRpxI5MvDjpXSPNC/dULFWS/VTHdLvql0xCEmt4BOWSbtYZM/SKZ33prT3TqVYm2Z3VO798lxeXfQbOAU8sFZJGK9XXwm4XQGat5vxFQb6k/Un1OYvZ0tLNt8+5CS5dMnhnNDHL/iLitiJFvTdwTZLOc+c4PMb24H/p8JfvfHpWq5G0H18BmT/+8W6+HwWeWa1EsrqnOjTpt32U8hWGdw9CtqRT36vNVA6fFfQ0sT+gTJIWfskxW5tFxxRzlChp8e2WVSMfWyKSajesmvsuonfo3/pbxibqHLBnLgtIygKSsvhVchE/yi/ieINOFiEpfuRmEYeXlnEMbBEH6hZxNHEZhzwBAAAAAAAAAAAAAAAAAAAAAAAA8Dv/ASLAKz+YJhWdAAAAAElFTkSuQmCC" class="main_icon" alt="Availability"/>
+    <img src="https://raw.githubusercontent.com/wicorn29/pcr/main/images/staff_mode.png" class="main_icon" alt="Availability"/>
 
     <h1 id="status_label" class="status <%= availability_class %>">
-        You must wait for your device to charge!.
+        Ready to rent!.
     </h1>
 </div>
 
-<!--<form action="https://bit.ly/rentpc94935" target="_blank">
+<form action="https://bit.ly/rentpc94935" target="_blank">
     <input type="submit" value="Rent with Google" target="_blank" />
-</form>    (this is for luckey people and you arent one no offence ur looking at code)-->
+</form>    <!--(this is for luckey people and you arent one no offence ur looking at code)--!>
 <div id="idle_instructions"></div>
 <center>
