@@ -7,13 +7,13 @@
 }
   </style>
 <center>
-<h2 class="computer_name">Error: The owner of this service has shut down all devices.</h2>
+<h2 class="computer_name">Error: Wha-uo! You are almost outta battery! Please charge this device..</h2>
 
 <div class="headline_with_icon">
     <img src="https://raw.githubusercontent.com/wicorn29/pcr/main/images/endRes_100px.jpg" class="main_icon" alt="Availability"/>
 
     <h1 id="status_label" class="status <%= availability_class %>">
-        This device can't be used at this time.
+        Low Battery, Please charge!!!.
     </h1>
 </div>
 
